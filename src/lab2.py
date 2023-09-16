@@ -9,6 +9,7 @@ from kneed import KneeLocator
 import pickle
 
 
+
 def load_data():
     """
 
@@ -16,7 +17,7 @@ def load_data():
     """
 
     # Read the CSV file into a DataFrame
-    data = pd.read_csv("file.csv")
+    data = pd.read_csv("data/CC_GENERAL.csv")
 
     return data
 
