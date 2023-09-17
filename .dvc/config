@@ -1,0 +1,4 @@
+[core]
+    remote = lab2
+['remote "lab2"']
+    url = gs://ie7374
