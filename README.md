@@ -23,7 +23,7 @@ This lab revolves around two key modules:
 - Note that, depending on your chosen [remote storage](https://dvc.org/doc/user-guide/data-management/remote-storage), you may need to install optional dependencies such as `[s3]`, `[azure]`, `[gdrive]`, `[gs]`, `[oss]`, `[ssh]`. To include all optional dependencies, use `[all]`.
 - Run this command to setup google cloud bucket as your storage `dvc remote add -d myremote gs://<mybucket>`
 - In order for DVC to be able to push and pull data from the remote, you need to have valid GCP credentials.
-- Run the following command for authentication `dvc remote modify --lab2 credentialpath <YOUR JSON TOKEN LOCATION>
+- Run the following command for authentication `dvc remote modify --lab2 credentialpath <YOUR JSON TOKEN LOCATION>`
 ### Tracking Data with DVC
 - Ensure you have downloaded the [required data](https://www.kaggle.com/datasets/arjunbhasin2013/ccdata) and placed it in the "data" folder, renaming the file to "CC_GENERAL.csv."
 - To initiate data tracking, execute the following steps:
