@@ -34,9 +34,9 @@ def data_preprocessing(data):
     df = pickle.loads(data)
     df = df.dropna()
     clustering_data = df[["BALANCE", "PURCHASES", "CREDIT_LIMIT"]]
-    for i in clustering_data.columns:
-        MinMaxScaler(i)
-    clustering_serialized_data = pickle.dumps(clustering_data)
+    min_max_scaler = MinMaxScaler()
+    clustering_data_minmax = min_max_scaler.fit_transform(clustering_data)
+    clustering_serialized_data = pickle.dumps(clustering_data_minmax)
     return clustering_serialized_data
 
 
