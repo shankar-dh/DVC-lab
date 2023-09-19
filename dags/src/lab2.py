@@ -48,8 +48,6 @@ def build_save_model(data, filename):
         data (bytes): Serialized data for clustering.
         filename (str): Name of the file to save the clustering model.
 
-    Returns:
-        list: List of SSE (Sum of Squared Errors) values for different numbers of clusters.
     """
     df = pickle.loads(data)
     kmeans_kwargs = {"init": "random","n_init": 10,"max_iter": 300,"random_state": 42,}
@@ -58,31 +56,35 @@ def build_save_model(data, filename):
         kmeans = KMeans(n_clusters=k, **kmeans_kwargs)
         kmeans.fit(df)
         sse.append(kmeans.inertia_)
-
+    max_val = float('-inf')
+    true_clusters = 1
+    for i in range(0, 49):
+        if i - 1 >= 0 and i + 1 < 49:
+            val = (sse[i] - sse[i + 1]) / (sse[i - 1] - sse[i])
+            if val > max_val:
+                max_val = val
+                true_clusters = i
+    kmeans = KMeans(n_clusters=true_clusters, **kmeans_kwargs)
+    kmeans.fit(df)
     pickle.dump(kmeans, open(filename, 'wb'))
 
-    return sse
 
 
-def load_model_elbow(filename,sse):
+def load_model(filename):
     """
-    Loads a saved KMeans clustering model and determines the number of clusters using the elbow method.
+    Loads a saved KMeans clustering model.
 
     Args:
         filename (str): Name of the file containing the saved clustering model.
-        sse (list): List of SSE values for different numbers of clusters.
+
 
     Returns:
-        str: A string indicating the predicted cluster and the number of clusters based on the elbow method.
+        str: A string indicating the predicted cluster.
     """
 
     loaded_model = pickle.load(open(filename, 'rb'))
     df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/test.csv"))
-    
-    kl = KneeLocator(
-        range(1, 50), sse, curve="convex", direction="decreasing"
-    )
 
-    return "Cluster " + str(loaded_model.predict(df)[0]) +" Number of clusters "+str(kl.elbow)
+    return "Cluster " + str(loaded_model.predict(df)[0])
 
 
