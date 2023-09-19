@@ -2,7 +2,7 @@
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-from src.lab2 import load_data, data_preprocessing, build_save_model,load_model_elbow
+from src.lab2 import load_data, data_preprocessing, build_save_model,load_model
 
 from airflow import configuration as conf
 
@@ -52,8 +52,8 @@ build_save_model_task = PythonOperator(
 # Task to load a model using the 'load_model_elbow' function, depends on 'build_save_model_task'
 load_model_task = PythonOperator(
     task_id='load_model_task',
-    python_callable=load_model_elbow,
-    op_args=["model2.sav", build_save_model_task.output],
+    python_callable=load_model,
+    op_args=["model2.sav"],
     dag=dag,
 )
 
